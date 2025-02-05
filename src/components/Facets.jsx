@@ -34,8 +34,8 @@ export const CustomFacet = withController(
 						{facet.label}
 					</h5>
 
-					<div className={`ss__facet--field-${facet.field} ss__facet--display-${facet.display} ${facet.collapsed ? 'ss__facet--collapsed' : ''}`}>
-						<div className="collapsible-content__inner ss__facet-options">
+					<div className={`ss__facet--field-${facet.field} ss__facet--display-${facet.display} ${!facet.collapsed ? 'ss__dropdown--open' : ''}`}>
+						<div className="collapsible-content__inner ss__facet__options">
 							{{
 								grid: <FacetGridOptions values={facet.values} />,
 								palette: <FacetPaletteOptions values={facet.values} />,
