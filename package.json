@@ -30,7 +30,7 @@
 		],
 		"tags": [],
 		"version": "0.62.0",
-		"scaffold": "snapfu-scaffold-preact"
+		"scaffold": "snapfu-scaffold-preact-custom"
 	},
 	"prettier": "@searchspring/prettier",
 	"dependencies": {
