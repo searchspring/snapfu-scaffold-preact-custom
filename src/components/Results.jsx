@@ -24,18 +24,18 @@ export const Results = withController(
 );
 
 const Result = withController(
+	withTracking(
 	observer((props) => {
-		const { result, controller } = props;
+		const { result, controller, trackingRef } = props;
 		const {
 			attributes,
 			mappings: { core },
 		} = result;
-		const intellisuggest = (e) => controller.track.product.click(e, result);
 
 		return (
 			result && (
-				<div className="ss__result__wrapper">
-					<a href={core.url} onClick={intellisuggest}>
+				<div className="ss__result__wrapper" ref={trackingRef}>
+					<a href={core.url}>
 						<OverlayBadge controller={controller} result={result}>
 							<Image src={core.imageUrl} />
 						</OverlayBadge>
@@ -45,7 +45,7 @@ const Result = withController(
 					<CalloutBadge result={result} />
 
 					<div>
-						<a href={core.url} onClick={intellisuggest}>
+						<a href={core.url}>
 							{core.name}
 						</a>
 					</div>
@@ -58,7 +58,7 @@ const Result = withController(
 				</div>
 			)
 		);
-	})
+	}))
 );
 
 export const NoResults = withController(
