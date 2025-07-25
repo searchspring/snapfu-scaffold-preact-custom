@@ -1,6 +1,15 @@
 import { h, Fragment } from 'preact';
 import { observer } from 'mobx-react';
-import { Price, InlineBanner, withController, useMediaQuery, OverlayBadge, CalloutBadge, Image } from '@searchspring/snap-preact-components';
+import {
+	Price,
+	InlineBanner,
+	withController,
+	withTracking,
+	useMediaQuery,
+	OverlayBadge,
+	CalloutBadge,
+	Image,
+} from '@searchspring/snap-preact-components';
 
 export const Results = withController(
 	observer((props) => {
@@ -24,41 +33,40 @@ export const Results = withController(
 );
 
 const Result = withController(
-	observer((props) => {
-		const { result, controller } = props;
-		const {
-			attributes,
-			mappings: { core },
-		} = result;
-		const intellisuggest = (e) => controller.track.product.click(e, result);
+	withTracking(
+		observer((props) => {
+			const { result, controller, trackingRef } = props;
+			const {
+				attributes,
+				mappings: { core },
+			} = result;
 
-		return (
-			result && (
-				<div className="ss__result__wrapper">
-					<a href={core.url} onClick={intellisuggest}>
-						<OverlayBadge controller={controller} result={result}>
-							<Image src={core.imageUrl} />
-						</OverlayBadge>
-					</a>
-					<hr />
-
-					<CalloutBadge result={result} />
-
-					<div>
-						<a href={core.url} onClick={intellisuggest}>
-							{core.name}
+			return (
+				result && (
+					<div className="ss__result__wrapper" ref={trackingRef}>
+						<a href={core.url}>
+							<OverlayBadge controller={controller} result={result}>
+								<Image src={core.imageUrl} />
+							</OverlayBadge>
 						</a>
-					</div>
+						<hr />
 
-					<div>
-						<Price value={core.price} />
-					</div>
+						<CalloutBadge result={result} />
 
-					<hr />
-				</div>
-			)
-		);
-	})
+						<div>
+							<a href={core.url}>{core.name}</a>
+						</div>
+
+						<div>
+							<Price value={core.price} />
+						</div>
+
+						<hr />
+					</div>
+				)
+			);
+		})
+	)
 );
 
 export const NoResults = withController(
